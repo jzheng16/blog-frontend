@@ -7,6 +7,8 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SinglePostScreen from '../screens/SinglePostScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -16,6 +18,12 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
+    SinglePost: SinglePostScreen,
+    CreatePost: CreatePostScreen
+  },
+  {
+    initialRouteName: 'Home',
+    //headerLayoutPreset: 'center' // Center all header titles by default
   },
   config
 );

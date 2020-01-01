@@ -51,3 +51,26 @@ Use this object if the amount of platform specific code is minimal
 
 If you need entirely different components to render based on the platform, consider adding .ios / .android to components and then react native will automatically import the right one. EX: BigButton.ios.js vs BigButton.android.js
 
+
+
+
+
+
+
+
+
+
+### Gotchas
+Performance seems to really dwindle if react native debugger is on. Buttons and pages take seconds sometimes to render and not as responsive 
+
+
+
+### Layout CSS 
+
+ 1. marginVertical, marginHorizontal but no margin shorthand.
+ 2. No border shorthand as well, must use borderColor, borderWidth, borderStyle
+ 3. flex is the defact way to layout a page with flex direction default to column
+ 4. 
+
+
+
