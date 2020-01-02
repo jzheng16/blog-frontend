@@ -13,26 +13,36 @@ import {
 import { MonoText } from '../components/StyledText';
 import PostsScreen from './PostsScreen'
 import Posts from './PostsScreen';
+import AppStyles from '../AppStyles';
 
 export default class HomeScreen extends React.Component {
 
 
-  static navigationOptions = {
-    title: 'Bye',
-    headerTitleStyle: {
-      textAlign: 'center', flex: 1
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Home',
+      headerTitleStyle: {
+        textAlign: 'center', flex: 1
 
+      },
+      headerRight: () => (
+        <TouchableOpacity
+          style={AppStyles.button}
+          onPress={() => navigation.navigate('CreatePost')}>
+          <Text> Create Post </Text>
+        </TouchableOpacity>
+      )
     }
   }
   render() {
-    console.log(this.props);
+
     return (
       <View style={styles.container}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.button}
           onPress={() => this.props.navigation.navigate('CreatePost')}>
           <Text> Write a Post </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <PostsScreen />
       </View>
     );

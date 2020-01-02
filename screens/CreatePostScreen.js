@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import AppStyles from '../AppStyles';
 import PostsScreen from './PostsScreen';
-console.log(AppStyles)
 
 export default function CreateScreen(props) {
 
@@ -21,7 +20,7 @@ export default function CreateScreen(props) {
     });
 
     if (res.status = 201) {
-      props.navigation.navigate('Home');
+      props.navigation.navigate('Home', { hi: 1 });
     } else {
       // do some error logging show some red
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Stylesheet, Text, Image, View, Button, ShadowPropTypesIOS } from 'react-native';
+import { Stylesheet, Text, Image, View, Button } from 'react-native';
 
 
 export default function SinglePost(props) {
@@ -18,16 +18,13 @@ export default function SinglePost(props) {
         setPost(post);
 
       } catch (err) {
-        // Show a error page?
+        // Show a error page
         console.log(err);
       }
 
     }
 
     fetchPost(postId);
-
-
-
 
   }, []);
 
@@ -45,6 +42,8 @@ export default function SinglePost(props) {
 
 }
 
-SinglePost.navigationOptions = {
-  title: 'Single Post'
+SinglePost.navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('title', 'god dammit')
+  }
 }

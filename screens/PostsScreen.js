@@ -1,59 +1,94 @@
-import React, { Component } from 'react';
-import { Stylesheet, View, Button, TouchableOpacity, ScrollView, Text, Image } from 'react-native';
+import React, { Component, useEffect, useState } from 'react';
+import { Stylesheet, View, Button, TouchableOpacity, ScrollView, Text, Image, FlatList, ActivityIndicator } from 'react-native';
 import imagePlaceholder from '../assets/images/image-placeholder.png';
-import { withNavigation } from 'react-navigation';
-class Posts extends Component {
-  constructor(props) {
-    super(props);
+import { withNavigation, NavigationEvents } from 'react-navigation';
+import AppStyles from '../AppStyles';
 
-    this.state = {
-      posts: []
+
+
+function Posts(props) {
+
+  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [lastPage, setLastPage] = useState(100);
+
+  useEffect(() => {
+    console.log('called');
+    async function fetchPosts() {
+      if (page > lastPage) {
+        return;
+      }
+      setLoading(true);
+      const res = await fetch(`http://10.0.2.2:8000/api/posts?page=${page}&results=5`);
+      const json = await res.json();
+      setPosts([...posts, ...json.data]);
+      setLastPage(json.last_page);
+      setLoading(false);
     }
-  }
+
+    fetchPosts();
+  }, [page])
 
 
 
-  // 10.0.0.2.2 points to AVD which I am using for android emulator 
-  componentDidMount() {
-    fetch("http://10.0.2.2:8000/api/posts")
-      .then(res => res.json())
-      .then(posts => {
-        this.setState({ posts })
-        console.log(posts);
-      })
-      .catch(error => console.log('There has been a problem with your fetch operation: ' + error.message))
-
-  }
-
-  render() {
-    return (
-      <ScrollView>
-        {this.state.posts.map(post => (
-          <TouchableOpacity key={post.id} onPress={() => this.props.navigation.navigate('SinglePost', {
-            postId: post.id
-          })}>
-            <View style={styles.post} key={post.id}>
-              <Text style={styles.categoryTitle}> Category </Text>
-              <Image
-                style={styles.image}
-                source={imagePlaceholder} />
 
 
-              <View style={styles.cardDescription}>
-                <Text style={styles.title}>{post.title}</Text>
-                <Text style={styles.description}>{post.description}</Text>
+  return (
+    <View>
+      <FlatList
+        data={posts}
+        onEndReached={() => setPage(page + 1)}
+        // Indicates the point in which to start loading, 0 means gotta scroll to bottom 
+        onEndReachedThreshold={0.01}
+        renderItem={({ item, index }) => {
+          // console.log('post?', item)
+          return (
+            <TouchableOpacity onPress={() => props.navigation.navigate('SinglePost', {
+              postId: item.id,
+              title: item.title
+            })}>
+              <View style={styles.post}>
+                <Text style={styles.categoryTitle}> Category </Text>
+                <Image
+                  style={styles.image}
+                  source={imagePlaceholder} />
+                <View style={styles.cardDescription}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Text style={styles.description}>{item.description}</Text>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))
+            </TouchableOpacity>
+
+          )
         }
+        }
+        keyExtractor={item => item.id.toString()}
+      />
 
-      </ScrollView>
+      <ActivityIndicator
+        style={AppStyles.loading}
+        animating={loading}
+        size="large"
+        color="blue"
+      />
 
-    )
-  }
+    </View>
+
+
+
+
+
+
+  )
+
+
 
 }
+
+/* <NavigationEvents
+        onWillFocus={fetchPosts}
+      /> */
 
 const styles = {
   post: {
