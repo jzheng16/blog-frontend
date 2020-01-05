@@ -27,7 +27,7 @@ export default class HomeScreen extends React.Component {
       },
       headerRight: () => (
         <TouchableOpacity
-          style={AppStyles.button}
+          style={[AppStyles.button, styles.button]}
           onPress={() => navigation.navigate('CreatePost')}>
           <Text> Create Post </Text>
         </TouchableOpacity>

@@ -49,7 +49,7 @@ function Posts(props) {
               title: item.title
             })}>
               <View style={styles.post}>
-                <Text style={styles.categoryTitle}> Category </Text>
+                <Text style={styles.categoryTitle}> {item.name} </Text>
                 <Image
                   style={styles.image}
                   source={imagePlaceholder} />

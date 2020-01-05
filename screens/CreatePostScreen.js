@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, TouchableOpacity, Picker } from 'react-native';
 import AppStyles from '../AppStyles';
 import PostsScreen from './PostsScreen';
 
 export default function CreateScreen(props) {
 
   // Will need the ability to let a user select a category later and maybe other things
-  const [post, setPost] = useState({ title: '', description: '' });
+  const [post, setPost] = useState({ title: '', description: '', category_id: 0 });
+  const [categories, setCategories] = useState([]);
 
 
+
+  useEffect(() => {
+    async function getCategories() {
+      const res = await fetch('http://10.0.2.2:8000/api/categories');
+      const categories = await res.json();
+      console.log('categories?', categories)
+      setCategories(categories);
+    }
+
+    getCategories();
+  }, [])
 
   onSubmit = async () => {
+    console.log('post?', post)
     const res = await fetch("http://10.0.2.2:8000/api/post", {
       method: 'POST',
       headers: {
@@ -19,7 +32,8 @@ export default function CreateScreen(props) {
       body: JSON.stringify(post)
     });
 
-    if (res.status = 201) {
+    console.log('res', res)
+    if (res.status == 201) {
       props.navigation.navigate('Home', { hi: 1 });
     } else {
       // do some error logging show some red
@@ -64,6 +78,20 @@ export default function CreateScreen(props) {
           </View>
         </TouchableOpacity> */}
 
+      <Picker
+        selectedValue={post.category_id}
+        style={styles.picker}
+        onValueChange={(value, index) => {
+          console.log(value)
+          setPost({ ...post, category_id: value });
+        }}>
+        {categories.map(category => (
+          <Picker.Item
+            key={category.id}
+            label={category.name}
+            value={category.id} />
+        ))}
+      </Picker>
 
 
     </View>
