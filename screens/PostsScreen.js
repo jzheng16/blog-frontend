@@ -42,14 +42,14 @@ function Posts(props) {
         // Indicates the point in which to start loading, 0 means gotta scroll to bottom 
         onEndReachedThreshold={0.01}
         renderItem={({ item, index }) => {
-          // console.log('post?', item)
+
           return (
             <TouchableOpacity onPress={() => props.navigation.navigate('SinglePost', {
               postId: item.id,
               title: item.title
             })}>
               <View style={styles.post}>
-                <Text style={styles.categoryTitle}> {item.name} </Text>
+                <Text style={styles.categoryTitle}> {item.category_name} </Text>
                 <Image
                   style={styles.image}
                   source={imagePlaceholder} />

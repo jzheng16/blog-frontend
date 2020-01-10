@@ -9,6 +9,8 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SinglePostScreen from '../screens/SinglePostScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -17,12 +19,14 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
+    Login: LoginScreen,
+    Signup: SignupScreen,
     Home: HomeScreen,
     SinglePost: SinglePostScreen,
     CreatePost: CreatePostScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
     //headerLayoutPreset: 'center' // Center all header titles by default
   },
   config
