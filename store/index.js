@@ -2,6 +2,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
 import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
 
 const enhancerList = [];
@@ -11,7 +12,7 @@ if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
 
-const composedEnhancer = compose(applyMiddleware(createLogger()), ...enhancerList);
+const composedEnhancer = compose(applyMiddleware(thunk, createLogger({ collapsed: true })), ...enhancerList);
 
 const initStore = () => createStore(rootReducer, {}, composedEnhancer);
 

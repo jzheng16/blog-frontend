@@ -3,27 +3,25 @@ import { Stylesheet, View, Button, TouchableOpacity, ScrollView, Text, Image, Fl
 import imagePlaceholder from '../assets/images/image-placeholder.png';
 import { withNavigation, NavigationEvents } from 'react-navigation';
 import AppStyles from '../AppStyles';
-
-
-
+import { connect } from 'react-redux';
+import { gettingPosts } from '../store/action-creators/posts';
 function Posts(props) {
 
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [lastPage, setLastPage] = useState(100);
+
 
   useEffect(() => {
-    console.log('called');
     async function fetchPosts() {
-      if (page > lastPage) {
+      if (page > props.lastPage) {
         return;
       }
       setLoading(true);
-      const res = await fetch(`http://10.0.2.2:8000/api/posts?page=${page}&results=5`);
-      const json = await res.json();
-      setPosts([...posts, ...json.data]);
-      setLastPage(json.last_page);
+
+      console.log('page number', page);
+      props.gettingPosts(page);
+
       setLoading(false);
     }
 
@@ -32,12 +30,10 @@ function Posts(props) {
 
 
 
-
-
   return (
     <View>
       <FlatList
-        data={posts}
+        data={props.posts}
         onEndReached={() => setPage(page + 1)}
         // Indicates the point in which to start loading, 0 means gotta scroll to bottom 
         onEndReachedThreshold={0.01}
@@ -133,4 +129,17 @@ const styles = {
   }
 }
 
-export default withNavigation(Posts);
+
+const mapStateToProps = (state) => ({
+  posts: state.posts.posts,
+  lastPage: state.posts.lastPage
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  gettingPosts(page) {
+    return dispatch(gettingPosts(page))
+  }
+});
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Posts));
+

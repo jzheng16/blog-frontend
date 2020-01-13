@@ -26,7 +26,7 @@ const HomeStack = createStackNavigator(
     CreatePost: CreatePostScreen
   },
   {
-    initialRouteName: 'Signup',
+    initialRouteName: 'Home',
     //headerLayoutPreset: 'center' // Center all header titles by default
   },
   config

@@ -15,7 +15,6 @@ export default function CreateScreen(props) {
     async function getCategories() {
       const res = await fetch('http://10.0.2.2:8000/api/categories');
       const categories = await res.json();
-      console.log('categories?', categories)
       setCategories(categories);
     }
 
@@ -23,7 +22,6 @@ export default function CreateScreen(props) {
   }, [])
 
   onSubmit = async () => {
-    console.log('post?', post)
     const res = await fetch("http://10.0.2.2:8000/api/post", {
       method: 'POST',
       headers: {
@@ -32,7 +30,6 @@ export default function CreateScreen(props) {
       body: JSON.stringify(post)
     });
 
-    console.log('res', res)
     if (res.status == 201) {
       props.navigation.navigate('Home', { hi: 1 });
     } else {
@@ -72,17 +69,11 @@ export default function CreateScreen(props) {
         <Text style={styles.buttonText}> Create Post </Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity onPress={() => this.onSubmit()}>
-          <View>
-            <Text> Touchable Opacity </Text>
-          </View>
-        </TouchableOpacity> */}
 
       <Picker
         selectedValue={post.category_id}
         style={styles.picker}
         onValueChange={(value, index) => {
-          console.log(value)
           setPost({ ...post, category_id: value });
         }}>
         {categories.map(category => (

@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default props => {
   const [values, setValues] = useState({ email: '', password: '' });
-  console.log(props)
   async function login() {
     const { email, password } = values;
 
