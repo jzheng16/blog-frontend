@@ -26,7 +26,7 @@ const HomeStack = createStackNavigator(
     CreatePost: CreatePostScreen
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Signup',
     //headerLayoutPreset: 'center' // Center all header titles by default
   },
   config
@@ -84,8 +84,17 @@ const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
-});
+},
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#334760'
+      }
+    }
+  });
 
 tabNavigator.path = '';
+
+
 
 export default tabNavigator;
