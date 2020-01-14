@@ -1,3 +1,4 @@
+// @refresh reset
 import React, { Component, useEffect, useState } from 'react';
 import { Stylesheet, View, Button, TouchableOpacity, ScrollView, Text, Image, FlatList, ActivityIndicator } from 'react-native';
 import imagePlaceholder from '../assets/images/image-placeholder.png';
@@ -6,8 +7,6 @@ import AppStyles from '../AppStyles';
 import { connect } from 'react-redux';
 import { gettingPosts } from '../store/action-creators/posts';
 function Posts(props) {
-
-  // const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -18,8 +17,6 @@ function Posts(props) {
         return;
       }
       setLoading(true);
-
-      console.log('page number', page);
       props.gettingPosts(page);
 
       setLoading(false);
@@ -38,7 +35,6 @@ function Posts(props) {
         // Indicates the point in which to start loading, 0 means gotta scroll to bottom 
         onEndReachedThreshold={0.01}
         renderItem={({ item, index }) => {
-
           return (
             <TouchableOpacity onPress={() => props.navigation.navigate('SinglePost', {
               postId: item.id,
@@ -50,6 +46,7 @@ function Posts(props) {
                   style={styles.image}
                   source={imagePlaceholder} />
                 <View style={styles.cardDescription}>
+
                   <Text style={styles.title}>{item.title}</Text>
                   <Text style={styles.description}>{item.description}</Text>
                 </View>
@@ -122,10 +119,12 @@ const styles = {
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Mont'
   },
   description: {
-    fontSize: 12
+    fontSize: 12,
+    fontFamily: 'Mont'
   }
 }
 

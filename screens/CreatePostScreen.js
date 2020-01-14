@@ -59,7 +59,7 @@ export default function CreateScreen(props) {
         onChangeText={description => setPost({ ...post, description })}
         placeholder="Description"
 
-        value={post.descriptionInpuit}
+        value={post.description}
       />
       <TouchableOpacity
         onPress={() => onSubmit()}

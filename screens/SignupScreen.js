@@ -11,7 +11,7 @@ function SignupScreen(props) {
 
   async function signup() {
     const { email, password, confirmPassword } = values;
-    alert('hello');
+
     // TODO: Perform validation 
 
     // const res = await fetch('http://10.0.2.2:8000/api/signup', {
