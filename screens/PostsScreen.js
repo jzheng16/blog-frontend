@@ -48,7 +48,7 @@ function Posts(props) {
                 <View style={styles.cardDescription}>
 
                   <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.description}>{item.description}</Text>
+                  <Text style={styles.description}>{item.description.substring(0, 50).concat('...')}</Text>
                 </View>
               </View>
             </TouchableOpacity>

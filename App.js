@@ -71,6 +71,7 @@ async function loadResourcesAsync(setLoadingComplete) {
       'Mont': require('./assets/fonts/Montserrat-Regular.ttf')
     }),
   ]);
+  // TODO: Remove this 
   setTimeout(() => {
 
     setLoadingComplete(true);
