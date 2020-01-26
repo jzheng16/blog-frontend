@@ -13,12 +13,15 @@ export const setLastPage = page => ({
 export const gettingPosts = (page) => async dispatch => {
   try {
     const res = await fetch(`http://10.0.2.2:8000/api/posts?page=${page}&results=5`);
+    console.log('what is res?', res);
     const json = await res.json();
+    console.log('JSON?', json);
     dispatch(setPosts(json.data));
     dispatch(setLastPage(json.last_page));
   } catch (err) {
 
-    console.error(err);
+
+    console.log(`Error getting ${page}`, err.message);
   }
 
 

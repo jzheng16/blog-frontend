@@ -4,22 +4,34 @@ import { Stylesheet, View, Button, TouchableOpacity, ScrollView, Text, Image, Fl
 import imagePlaceholder from '../assets/images/image-placeholder.png';
 import { withNavigation, NavigationEvents } from 'react-navigation';
 import AppStyles from '../AppStyles';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { gettingPosts } from '../store/action-creators/posts';
+
+// Display some meaningful dummy photos - TODO: Enable functionality to upload images to something like s3
+// const imagePaths = {
+//   health: '../assets/health.png',
+//   programming: '../assets/coding.jpg',
+//   javascript: '../assets/javascript.jpg'
+
+// }
+
 function Posts(props) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const lastPage = useSelector(state => state.posts.lastPage);
+  const posts = useSelector(state => state.posts.posts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchPosts() {
-      if (page > props.lastPage) {
+      if (page > lastPage) {
         return;
       }
+      console.log('getting Page...', page)
       setLoading(true);
-      props.gettingPosts(page);
-
+      dispatch(gettingPosts(page));
       setLoading(false);
+
     }
 
     fetchPosts();
@@ -29,8 +41,15 @@ function Posts(props) {
 
   return (
     <View>
+      <ActivityIndicator
+        style={AppStyles.loading}
+        animating={loading}
+        size="large"
+        color="blue"
+      />
+
       <FlatList
-        data={props.posts}
+        data={posts}
         onEndReached={() => setPage(page + 1)}
         // Indicates the point in which to start loading, 0 means gotta scroll to bottom 
         onEndReachedThreshold={0.01}
@@ -59,19 +78,7 @@ function Posts(props) {
         keyExtractor={item => item.id.toString()}
       />
 
-      <ActivityIndicator
-        style={AppStyles.loading}
-        animating={loading}
-        size="large"
-        color="blue"
-      />
-
     </View>
-
-
-
-
-
 
   )
 
@@ -129,16 +136,16 @@ const styles = {
 }
 
 
-const mapStateToProps = (state) => ({
-  posts: state.posts.posts,
-  lastPage: state.posts.lastPage
-});
+// const mapStateToProps = (state) => ({
+//   posts: state.posts.posts,
+//   lastPage: state.posts.lastPage
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  gettingPosts(page) {
-    return dispatch(gettingPosts(page))
-  }
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   gettingPosts(page) {
+//     return dispatch(gettingPosts(page))
+//   }
+// });
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Posts));
+export default withNavigation(Posts);
 

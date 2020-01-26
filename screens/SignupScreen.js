@@ -3,6 +3,8 @@ import { View, TextInput, StyleSheet, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Font from 'expo-font';
 import { connect } from 'react-redux';
+
+
 function SignupScreen(props) {
   const [values, setValues] = useState({ email: '', password: '', confirmPassword: '' });
 

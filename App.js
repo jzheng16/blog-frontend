@@ -32,7 +32,7 @@ export default function App(props) {
 
   if (!isLoadingComplete) {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: 'black' }}>
         <Image
           source={require('./assets/images/splash.gif')}
           onLoad={() => loadResourcesAsync(setLoadingComplete)}
